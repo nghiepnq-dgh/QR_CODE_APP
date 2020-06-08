@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:qr_code_app/page/main_drawer/dart/drawer.view.dart';
 import 'package:qr_code_app/util/Key.dart';
 import 'dart:async';
 import 'package:barcode_scan/barcode_scan.dart';
@@ -230,6 +231,9 @@ class _HomePageState extends State<HomePage> {
               onPressed: scan,
             )
           ],
+        ),
+        drawer: Drawer(
+          child: DrawerView(),
         ),
         body: ListView(
           scrollDirection: Axis.vertical,
