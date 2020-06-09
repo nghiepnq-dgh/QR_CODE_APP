@@ -20,6 +20,7 @@ class _SplashScreenPgaeState extends State<SplashScreenPgae> {
     _timer = new Timer(const Duration(seconds: 3), () {
       NavigatorUtil.pushAndRemoveUntil(context, HomePage());
     });
+
   }
 
   @override

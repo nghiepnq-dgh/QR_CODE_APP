@@ -4,9 +4,9 @@ import 'package:fluttertoast/fluttertoast.dart';
 class ToastMessage {
   static success({message}) {
     Fluttertoast.showToast(
-        msg: message ?? "Thanh công",
+        msg: message != null ? message : "Thành công",
         toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.CENTER,
+        gravity: ToastGravity.BOTTOM,
         timeInSecForIosWeb: 1,
         backgroundColor: Colors.lightBlue[200],
         textColor: Colors.white,
@@ -17,7 +17,7 @@ class ToastMessage {
     Fluttertoast.showToast(
         msg: message ?? "Có lỗi xảy ra vui lòng thử lại sau ít phút!",
         toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.CENTER,
+        gravity: ToastGravity.BOTTOM,
         timeInSecForIosWeb: 1,
         backgroundColor: Colors.red[200],
         textColor: Colors.white,

@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:qr_code_app/page/login/login.bloc.dart';
 import 'package:qr_code_app/page/main_drawer/dart/drawer.view.dart';
+import 'package:qr_code_app/page/user/model/user_me.dart';
+import 'package:qr_code_app/router/route_generator.dart';
 import 'package:qr_code_app/util/Key.dart';
 import 'dart:async';
 import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/services.dart';
 import 'dart:io' show Platform;
 
+import 'package:qr_code_app/util/LocalStored.dart';
+
 class HomePage extends StatefulWidget {
+//  var userInfor;
+//  HomePage({Key key, this.userInfor}) : super(key: key);
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -22,7 +29,7 @@ class _HomePageState extends State<HomePage> {
   var _selectedCamera = -1;
   var _useAutoFocus = true;
   var _autoEnableFlash = false;
-
+  var userInfo;
   static final _possibleFormats = BarcodeFormat.values.toList()
     ..removeWhere((e) => e == BarcodeFormat.unknown);
 
@@ -35,10 +42,17 @@ class _HomePageState extends State<HomePage> {
       _numberOfCameras = await BarcodeScanner.numberOfCameras;
       setState(() {});
     });
+    WidgetsBinding.instance.addPostFrameCallback((_) => getUserInfo());
+  }
+
+  Future<void> getUserInfo() async {
+    userInfo = await LocalStore.getUserInfor();
   }
 
   @override
   Widget build(BuildContext context) {
+    getUserInfo();
+    setState(() {});
     var contentList = <Widget>[
       if (scanResult != null)
         Card(
@@ -130,8 +144,8 @@ class _HomePageState extends State<HomePage> {
           enabled: false,
         ),
         ListTile(
-          title:
-              Text("Khả năng chịu đựng (${_aspectTolerance.toStringAsFixed(2)})"),
+          title: Text(
+              "Khả năng chịu đựng (${_aspectTolerance.toStringAsFixed(2)})"),
           subtitle: Slider(
             min: -1.0,
             max: 1.0,
@@ -215,6 +229,8 @@ class _HomePageState extends State<HomePage> {
     ));
 
     return MaterialApp(
+      initialRoute: "/",
+      onGenerateRoute: RouteGenerator.generateRoute,
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         key: KeyOption.home,
@@ -233,7 +249,18 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
         drawer: Drawer(
-          child: DrawerView(),
+          child:
+//            StreamBuilder<UserMeResponse>(
+//          stream: blocLoginModule.subjectUserMe.stream,
+//          builder: (context, AsyncSnapshot<UserMeResponse> snapshot) {
+//            if (snapshot.hasData) {
+//                print(snapshot.hasData);
+//                DrawerView(userInfo: userInfo);
+//            }
+//            DrawerView(userInfo: userInfo);
+//          },
+//        )
+              DrawerView(userInfo: userInfo),
         ),
         body: ListView(
           scrollDirection: Axis.vertical,

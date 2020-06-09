@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:qr_code_app/util/ImgPath.dart';
 
 class DrawerView extends StatefulWidget {
+  var userInfo;
+  DrawerView({Key key, this.userInfo}) : super(key: key);
   @override
   _DrawerViewState createState() => _DrawerViewState();
 }
@@ -24,34 +26,74 @@ class _DrawerViewState extends State<DrawerView> {
                     height: 100,
                     margin: EdgeInsets.only(top: 30.0),
                     decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        image: DecorationImage(
-                          image: AssetImage(ImgPath.logo),
-                          fit: BoxFit.fill
-                        ),
+                      shape: BoxShape.circle,
+                      image: DecorationImage(
+                          image: AssetImage(ImgPath.logo), fit: BoxFit.fill),
                     ),
                   )
                 ],
               ),
             ),
           ),
-          ListTile(
-            leading: Icon(Icons.lock_open),
-            title: Text("Đăng nhập", style: TextStyle(fontSize: 18.0),),
-            onTap: (){},
-          ),
+//          ListTile(
+//            leading: Icon(Icons.lock_open),
+//            title: Text("Đăng nhập", style: TextStyle(fontSize: 18.0),),
+//            onTap: (){
+//              Navigator.of(context).pushNamed("/login");
+//            },
+//          ),
+//          ListTile(
+//            leading: Icon(Icons.list),
+//            title: Text("Danh sách hồ sơ", style: TextStyle(fontSize: 18.0),),
+//            onTap: (){},
+//          ),
+//          ListTile(
+//            leading: Icon(Icons.history),
+//            title: Text("Lịch sử tìm kiếm", style: TextStyle(fontSize: 18.0),),
+//            onTap: (){},
+//          )
+          ListMenu(context, widget.userInfo)
+        ],
+      ),
+    );
+  }
+
+  Widget ListMenu(BuildContext context, userInfo) {
+    if (userInfo != null) {
+      return Column(
+        children: <Widget>[
           ListTile(
             leading: Icon(Icons.list),
-            title: Text("Danh sách hồ sơ", style: TextStyle(fontSize: 18.0),),
-            onTap: (){},
+            title: Text(
+              "Danh sách hồ sơ",
+              style: TextStyle(fontSize: 18.0),
+            ),
+            onTap: () {},
           ),
           ListTile(
             leading: Icon(Icons.history),
-            title: Text("Lịch sử tìm kiếm", style: TextStyle(fontSize: 18.0),),
-            onTap: (){},
+            title: Text(
+              "Lịch sử tìm kiếm",
+              style: TextStyle(fontSize: 18.0),
+            ),
+            onTap: () {},
           )
         ],
-      ),
+      );
+    }
+    return Column(
+      children: <Widget>[
+        ListTile(
+          leading: Icon(Icons.lock_open),
+          title: Text(
+            "Đăng nhập",
+            style: TextStyle(fontSize: 18.0),
+          ),
+          onTap: () {
+            Navigator.of(context).pushNamed("/login");
+          },
+        ),
+      ],
     );
   }
 }

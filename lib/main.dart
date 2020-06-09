@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:qr_code_app/SplashScreen.dart';
-import 'package:qr_code_app/page/login/login.view.dart';
+import 'package:qr_code_app/util/LocalStored.dart';
 
 void main() {
   runApp(MyApp());
@@ -10,6 +10,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    LocalStore.getInstance();
     return MaterialApp(
       title: 'QR CODE',
       theme: ThemeData(
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.lightBlue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: LoginView(),
+      home: SplashScreenPgae(),
     );
   }
 }
