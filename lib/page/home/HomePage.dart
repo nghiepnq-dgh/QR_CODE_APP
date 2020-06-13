@@ -248,19 +248,10 @@ class _HomePageState extends State<HomePage> {
             )
           ],
         ),
+
         drawer: Drawer(
           child:
-//            StreamBuilder<UserMeResponse>(
-//          stream: blocLoginModule.subjectUserMe.stream,
-//          builder: (context, AsyncSnapshot<UserMeResponse> snapshot) {
-//            if (snapshot.hasData) {
-//                print(snapshot.hasData);
-//                DrawerView(userInfo: userInfo);
-//            }
-//            DrawerView(userInfo: userInfo);
-//          },
-//        )
-              DrawerView(userInfo: userInfo),
+          ListMenuProvider(),
         ),
         body: ListView(
           scrollDirection: Axis.vertical,
