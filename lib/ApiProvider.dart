@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:load/load.dart';
 import 'package:qr_code_app/page/document/model/list_doc.model.dart';
 import 'package:qr_code_app/page/login/login.model.dart';
 import 'package:qr_code_app/page/user/model/user_me.dart';
@@ -12,7 +13,7 @@ class ApiProvider {
   }
   ApiProvider._internal() {
     BaseOptions options = new BaseOptions(
-      baseUrl: "http://192.168.1.9:3000/",
+      baseUrl: "http://192.168.1.4:3000/",
       connectTimeout: 60 * 1000, // 60 seconds
       receiveTimeout: 60 * 1000, // 60 seconds
       contentType: Headers.jsonContentType, responseType: ResponseType.json,
@@ -23,10 +24,9 @@ class ApiProvider {
     _dio.interceptors
         .add(InterceptorsWrapper(onRequest: (RequestOptions options) async {
       String path = options.path;
-      if (!path.contains("auth/login") && !path.contains("auth/me")) {
+      String token = await LocalStore.getToken();
+      if (!path.contains("auth/signin") && token != null) {
         //TODO somethings
-      } else {
-        String token = await LocalStore.getToken();
         if (token != null) {
           options.headers["Authorization"] = "Bearer " + token;
         }
@@ -56,10 +56,12 @@ class ApiProvider {
     }
   }
 
-  Future<DocumentsResponse> listDocuments() async {
+  Future<DocumentsResponse> listDocuments(query) async {
     Response response;
     try {
-      response = await _dio.get("document");
+      showLoadingDialog();
+      response = await _dio.get("document", queryParameters: query);
+      hideLoadingDialog();
       return DocumentsResponse.fromJson(response.data);
     } catch (error, stacktrace) {
       print("Exception occured: $error stackTrace: $stacktrace");

@@ -16,7 +16,8 @@ class ListMenuProvider extends StatelessWidget {
 
   Future<String> getUerMe() async {
     final user = await LocalStore.getUserInfor();
-    return user;
+    if(user!= null) return user;
+    return "empty";
   }
 }
 
@@ -25,7 +26,7 @@ class ListMenuItem extends StatelessWidget {
     return Consumer<String>(
       builder: (context, value, child) {
         //TODO LOGIN
-        if (value != null) {
+        if (value != "empty") {
           final userInfo = json.decode(value);
           final email = userInfo['email'];
           final role = userInfo['role'];
@@ -94,7 +95,9 @@ class ListMenuItem extends StatelessWidget {
                     style: TextStyle(fontSize: 18.0),
                   ),
                   onTap: () {
-//                    Navigator.of(context).pushNamed("/login");
+                   LocalStore.saveToken("");
+                   LocalStore.saveUserInfor("empty");
+                   Navigator.of(context).pushNamed("/splash");
                   },
                 ),
               ],

@@ -60,14 +60,14 @@ class _DocumentPageState extends State<DocumentPage> {
                           ),
                           focusedBorder: OutlineInputBorder(
                               borderSide:
-                                  BorderSide(color: Colors.white, width: 0),
+                              BorderSide(color: Colors.white, width: 0),
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(35.0))),
+                              BorderRadius.all(Radius.circular(35.0))),
                           enabledBorder: OutlineInputBorder(
                               borderSide:
-                                  BorderSide(color: Colors.white, width: 0),
+                              BorderSide(color: Colors.white, width: 0),
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(35.0))),
+                              BorderRadius.all(Radius.circular(35.0))),
                           labelText: "Tìm kiếm",
                           labelStyle: TextStyle(
                             color: Colors.white,
@@ -78,20 +78,9 @@ class _DocumentPageState extends State<DocumentPage> {
               ),
               preferredSize: const Size.fromHeight(50.0)),
         ),
-        body: StateLessPageDocument(query: object,),
+        body: Container(),
       ),
     );
   }
 }
 
-class StateLessPageDocument extends StatelessWidget {
-  final query;
-   StateLessPageDocument({Key key, this.query}) : super(key: key);
-  @override
-  Widget build(BuildContext context) {
-    return FutureProvider<Object>.value(
-      value: blocDocumentModule.listDocuments(query),
-      child: ListItemDoc(),
-    );
-  }
-}

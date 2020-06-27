@@ -31,13 +31,17 @@ class DocumentsResponse extends BaseResponse {
 class Data {
   String id;
   String contend;
+  String status;
+  String reason;
   User user;
 
-  Data({this.id, this.contend, this.user});
+  Data({this.id, this.contend, this.user, this.status, this.reason});
 
   Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     contend = json['contend'];
+    status = json['status'];
+    reason = json['reason'];
     user = json['user'] != null ? new User.fromJson(json['user']) : null;
   }
 
@@ -45,6 +49,8 @@ class Data {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
     data['contend'] = this.contend;
+    data['status'] = this.status;
+    data['reason'] = this.reason;
     if (this.user != null) {
       data['user'] = this.user.toJson();
     }

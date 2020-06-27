@@ -5,8 +5,8 @@ import 'package:qr_code_app/util/toast.message.dart';
 
 class DocumentBloc extends ChangeNotifier {
   final DocumentRepository _documentRepository = DocumentRepository();
-  listDocuments() async {
-    DocumentsResponse documentsResponse = await _documentRepository.listDocumentsReposi();
+  listDocuments(query) async {
+    DocumentsResponse documentsResponse = await _documentRepository.listDocumentsReposi(query);
     if (documentsResponse?.data != null) {
       // return documentsResponse;
       return documentsResponse;
