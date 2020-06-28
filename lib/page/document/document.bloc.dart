@@ -23,11 +23,11 @@ class DocumentBloc extends ChangeNotifier {
   getDetailDoc(id) async {
     DocumentDetailResponse documentDetailResponse =
         await _documentRepository.getDetailDoc(id);
-    if (documentDetailResponse != null) {
+    if (documentDetailResponse?.id != null) {
       return documentDetailResponse;
     } else {
       ToastMessage.error(message: documentDetailResponse.message);
-      return documentDetailResponse;
+      return null;
     }
   }
 

@@ -70,11 +70,16 @@ class ApiProvider {
     }
   }
 
-  Future<DocumentDetailResponse>getDocId(id) async {
+  Future<DocumentDetailResponse> getDocId(id) async {
     Response response;
-      try {
+    try {
       showLoadingDialog();
-      response = await _dio.get("document/$id");
+      final token = await LocalStore.getToken();
+      if (token != null) {
+        response = await _dio.get("document/$id");
+      } else {
+        response = await _dio.get("document/$id/no_login");
+      }
       hideLoadingDialog();
       return DocumentDetailResponse.fromJson(response.data);
     } catch (error, stacktrace) {
@@ -83,9 +88,9 @@ class ApiProvider {
     }
   }
 
-   Future<DocumentDetailResponse>updateDoc(id, data) async {
+  Future<DocumentDetailResponse> updateDoc(id, data) async {
     Response response;
-      try {
+    try {
       showLoadingDialog();
       response = await _dio.put("document/$id", data: data);
       hideLoadingDialog();
@@ -96,4 +101,3 @@ class ApiProvider {
     }
   }
 }
-

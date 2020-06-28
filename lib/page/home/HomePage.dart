@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:qr_code_app/page/login/login.bloc.dart';
+import 'package:qr_code_app/page/document/view/document-detail.view.dart';
 import 'package:qr_code_app/page/main_drawer/dart/drawer.view.dart';
-import 'package:qr_code_app/page/user/model/user_me.dart';
 import 'package:qr_code_app/router/route_generator.dart';
 import 'package:qr_code_app/util/Key.dart';
 import 'dart:async';
@@ -64,7 +63,50 @@ class _HomePageState extends State<HomePage> {
               ),
               ListTile(
                 title: Text("Nội dung"),
-                subtitle: Text(scanResult.rawContent ?? ""),
+                subtitle: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Expanded(flex: 4, child: Text(scanResult.rawContent ?? "")),
+                    !scanResult.rawContent.isEmpty
+                        ? Expanded(
+                            flex: 2,
+                            child: RawMaterialButton(
+                              fillColor: Colors.lightBlueAccent,
+                              splashColor: Colors.greenAccent,
+                              child: Padding(
+                                padding: EdgeInsets.all(0.0),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: const <Widget>[
+                                    Icon(
+                                      Icons.check_circle_outline,
+                                      color: Colors.amber,
+                                    ),
+                                    SizedBox(
+                                      width: 2.0,
+                                    ),
+                                    Text(
+                                      "Xem",
+                                      maxLines: 1,
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => DocumentDetail(
+                                          scanResult.rawContent)),
+                                );
+                              },
+                              shape: const StadiumBorder(),
+                            ),
+                          )
+                        : SizedBox()
+                  ],
+                ),
               ),
               ListTile(
                 title: Text("Định dạng"),
@@ -99,42 +141,6 @@ class _HomePageState extends State<HomePage> {
         groupValue: _selectedCamera,
       ));
     }
-//
-//    contentList.addAll([
-//      ListTile(
-//        title: Text("Button Texts"),
-//        dense: true,
-//        enabled: false,
-//      ),
-//      ListTile(
-//        title: TextField(
-//          decoration: InputDecoration(
-//            hasFloatingPlaceholder: true,
-//            labelText: "Flash On",
-//          ),
-//          controller: _flashOnController,
-//        ),
-//      ),
-//      ListTile(
-//        title: TextField(
-//          decoration: InputDecoration(
-//            hasFloatingPlaceholder: true,
-//            labelText: "Flash Off",
-//          ),
-//          controller: _flashOffController,
-//        ),
-//      ),
-//      ListTile(
-//        title: TextField(
-//          decoration: InputDecoration(
-//            hasFloatingPlaceholder: true,
-//            labelText: "Cancel",
-//          ),
-//          controller: _cancelController,
-//        ),
-//      ),
-//    ]);
-//    /////
 
     if (Platform.isAndroid) {
       contentList.addAll([
@@ -248,10 +254,8 @@ class _HomePageState extends State<HomePage> {
             )
           ],
         ),
-
         drawer: Drawer(
-          child:
-          ListMenuProvider(),
+          child: ListMenuProvider(),
         ),
         body: ListView(
           scrollDirection: Axis.vertical,
@@ -270,9 +274,6 @@ class _HomePageState extends State<HomePage> {
           "flash_on": _flashOnController.text,
           "flash_off": _flashOffController.text,
         },
-//          final _flashOnController = TextEditingController(text: "Bật Flash");
-//      final _flashOffController = TextEditingController(text: "Tắt Flash");
-//      final _cancelController = TextEditingController(text: "Huỷ");
         restrictFormat: selectedFormats,
         useCamera: _selectedCamera,
         autoEnableFlash: _autoEnableFlash,
@@ -281,7 +282,6 @@ class _HomePageState extends State<HomePage> {
           useAutoFocus: _useAutoFocus,
         ),
       );
-
       var result = await BarcodeScanner.scan(options: options);
 
       setState(() => scanResult = result);

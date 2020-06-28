@@ -41,13 +41,14 @@ class _DocumentDetailState extends State<DocumentDetail> {
 
 class ValidateDocument extends StatelessWidget {
   final object = {};
-  
+
   @override
   Widget build(BuildContext context) {
     return Consumer<Object>(builder: (context, value, child) {
       if (value != null) {
         DocumentDetailResponse data = value;
-        TextEditingController reason = new TextEditingController(text: data?.reason);
+        TextEditingController reason =
+            new TextEditingController(text: data?.reason);
         return RefreshIndicator(
           onRefresh: () {},
           child: SingleChildScrollView(
@@ -210,10 +211,11 @@ class ValidateDocument extends StatelessWidget {
             ),
           ),
         );
+      } else {
+        return Center(
+          child: Text("Empty data"),
+        );
       }
-      return Center(
-        child: Text("Empty data"),
-      );
     });
   }
 }
