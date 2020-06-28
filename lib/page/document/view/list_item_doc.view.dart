@@ -2,24 +2,39 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_code_app/page/document/document.bloc.dart';
 import 'package:qr_code_app/page/document/model/list_doc.model.dart';
+import 'package:qr_code_app/page/document/view/document-detail.view.dart';
 import 'package:qr_code_app/util/Functions.dart';
 import 'package:qr_code_app/util/ImgPath.dart';
 import 'package:qr_code_app/util/Key.dart';
 
 class ListItemDoc extends StatelessWidget {
+  final object;
+  ListItemDoc({Key key, this.object}) : super(key: key);
+
+  Future<Null> _refresh() async {
+    blocDocumentModule.listDocuments(object);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<Object>(builder: (context, value, child) {
       if (value != null) {
         DocumentsResponse item = value;
         return RefreshIndicator(
-          onRefresh: (){},
+          onRefresh: () {
+            _refresh();
+          },
           key: KeyOption.item_doc,
-                  child: ListView.builder(
+          child: ListView.builder(
               itemCount: item?.data.length,
               itemBuilder: (context, index) {
                 return ListTile(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => DocumentDetail(item?.data[index].id)),
+                    );
+                  },
                   title: Container(
                     decoration: new BoxDecoration(
                       border: Border(bottom: BorderSide(width: 0.5)),
@@ -29,7 +44,7 @@ class ListItemDoc extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         Expanded(
-                            flex: 6,
+                            flex: 3,
                             child: Row(
                               children: <Widget>[
                                 Image(

@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:load/load.dart';
+import 'package:qr_code_app/page/document/model/doc_detail.model.dart';
 import 'package:qr_code_app/page/document/model/list_doc.model.dart';
 import 'package:qr_code_app/page/login/login.model.dart';
 import 'package:qr_code_app/page/user/model/user_me.dart';
@@ -13,7 +14,7 @@ class ApiProvider {
   }
   ApiProvider._internal() {
     BaseOptions options = new BaseOptions(
-      baseUrl: "http://192.168.1.4:3000/",
+      baseUrl: "http://localhost:3000/",
       connectTimeout: 60 * 1000, // 60 seconds
       receiveTimeout: 60 * 1000, // 60 seconds
       contentType: Headers.jsonContentType, responseType: ResponseType.json,
@@ -66,6 +67,32 @@ class ApiProvider {
     } catch (error, stacktrace) {
       print("Exception occured: $error stackTrace: $stacktrace");
       return DocumentsResponse.fromJson(response?.data);
+    }
+  }
+
+  Future<DocumentDetailResponse>getDocId(id) async {
+    Response response;
+      try {
+      showLoadingDialog();
+      response = await _dio.get("document/$id");
+      hideLoadingDialog();
+      return DocumentDetailResponse.fromJson(response.data);
+    } catch (error, stacktrace) {
+      print("Exception occured: $error stackTrace: $stacktrace");
+      return DocumentDetailResponse.fromJson(response?.data);
+    }
+  }
+
+   Future<DocumentDetailResponse>updateDoc(id, data) async {
+    Response response;
+      try {
+      showLoadingDialog();
+      response = await _dio.put("document/$id", data: data);
+      hideLoadingDialog();
+      return DocumentDetailResponse.fromJson(response.data);
+    } catch (error, stacktrace) {
+      print("Exception occured: $error stackTrace: $stacktrace");
+      return DocumentDetailResponse.fromJson(response?.data);
     }
   }
 }

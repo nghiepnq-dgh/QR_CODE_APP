@@ -45,7 +45,7 @@ class _DocumentPageState extends State<DocumentPage> {
                     height: 40.0,
                     child: TextField(
                       onChanged: (text) {
-                        object['id'] = text;
+                        object['document_id'] = text;
                         blocDocumentModule.listDocuments(object);
                       },
                       keyboardType: TextInputType.text,
@@ -91,7 +91,7 @@ class StateLessPageDocument extends StatelessWidget {
   Widget build(BuildContext context) {
     return FutureProvider<Object>.value(
       value: blocDocumentModule.listDocuments(query),
-      child: ListItemDoc(),
+      child: ListItemDoc(object: query,),
     );
   }
 }
