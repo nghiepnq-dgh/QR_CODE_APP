@@ -19,8 +19,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => SplashScreenPgae());
       case "/document":
         return MaterialPageRoute(builder: (_) => DocumentPage());
-      case "/history":
-        return MaterialPageRoute(builder: (_) => PageHistory());
+      // case "/history":
+      //   return MaterialPageRoute(builder: (_) => PageHistory());
       default:
         return _errorRoute();
     }
