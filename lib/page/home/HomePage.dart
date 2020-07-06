@@ -149,20 +149,20 @@ class _HomePageState extends State<HomePage> {
           dense: true,
           enabled: false,
         ),
-        ListTile(
-          title: Text(
-              "Khả năng chịu đựng (${_aspectTolerance.toStringAsFixed(2)})"),
-          subtitle: Slider(
-            min: -1.0,
-            max: 1.0,
-            value: _aspectTolerance,
-            onChanged: (value) {
-              setState(() {
-                _aspectTolerance = value;
-              });
-            },
-          ),
-        ),
+        //  ListTile(
+        //    title: Text(
+        //        "Khả năng chịu đựng (${_aspectTolerance.toStringAsFixed(2)})"),
+        //    subtitle: Slider(
+        //      min: -1.0,
+        //      max: 1.0,
+        //      value: _aspectTolerance,
+        //      onChanged: (value) {
+        //        setState(() {
+        //          _aspectTolerance = value;
+        //        });
+        //      },
+        //    ),
+        //  ),
         CheckboxListTile(
           title: Text("Sử dụng lấy nét tự động"),
           value: _useAutoFocus,
