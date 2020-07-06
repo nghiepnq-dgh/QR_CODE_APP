@@ -16,7 +16,7 @@ class ListMenuProvider extends StatelessWidget {
 
   Future<String> getUerMe() async {
     final user = await LocalStore.getUserInfor();
-    if(user!= null) return user;
+    if (user != null) return user;
     return "empty";
   }
 }
@@ -86,7 +86,9 @@ class ListMenuItem extends StatelessWidget {
                     "Lịch sử tìm kiếm",
                     style: TextStyle(fontSize: 18.0),
                   ),
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.of(context).pushNamed("/history");
+                  },
                 ),
                 ListTile(
                   leading: Icon(Icons.close),
@@ -95,9 +97,9 @@ class ListMenuItem extends StatelessWidget {
                     style: TextStyle(fontSize: 18.0),
                   ),
                   onTap: () {
-                   LocalStore.saveToken("");
-                   LocalStore.saveUserInfor("empty");
-                   Navigator.of(context).pushNamed("/splash");
+                    LocalStore.saveToken("");
+                    LocalStore.saveUserInfor("empty");
+                    Navigator.of(context).pushNamed("/splash");
                   },
                 ),
               ],

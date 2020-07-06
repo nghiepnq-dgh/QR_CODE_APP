@@ -1,0 +1,11 @@
+POST http://192.168.100.9:3000/auth/signin
+Content-Type: application/json
+
+{
+    "identity": "4534535342",
+    "password": "123456789"
+}
+
+###
+GET http://192.168.100.9:3000/history
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGl0eSI6IjQ1MzQ1MzUzNDIiLCJpYXQiOjE1OTQwMTgwMzksImV4cCI6MzYwMDAwMDAwMTU5NDAxODAwMH0.CwuD0gFjubM6aVZHKzvGH0oEjcWID_LKpb9eqDOef_c

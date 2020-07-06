@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:load/load.dart';
 import 'package:qr_code_app/page/document/model/doc_detail.model.dart';
 import 'package:qr_code_app/page/document/model/list_doc.model.dart';
+import 'package:qr_code_app/page/history/model/list-history.model.dart';
 import 'package:qr_code_app/page/login/login.model.dart';
 import 'package:qr_code_app/page/user/model/user_me.dart';
 import 'package:qr_code_app/util/LocalStored.dart';
@@ -98,6 +99,19 @@ class ApiProvider {
     } catch (error, stacktrace) {
       print("Exception occured: $error stackTrace: $stacktrace");
       return DocumentDetailResponse.fromJson(response?.data);
+    }
+  }
+
+  Future<ListHistoryRespone> listHistory() async {
+    Response response;
+    try {
+      showLoadingDialog();
+      response = await _dio.put("history");
+      hideLoadingDialog();
+      return ListHistoryRespone.fromJson(response.data);
+    } catch (error, stacktrace) {
+      print("Exception occured: $error stackTrace: $stacktrace");
+      return ListHistoryRespone.fromJson(response?.data);
     }
   }
 }
