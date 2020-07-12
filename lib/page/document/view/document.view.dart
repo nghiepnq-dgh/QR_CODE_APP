@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:qr_code_app/page/document/document.bloc.dart';
 import 'package:qr_code_app/page/document/model/list_doc.model.dart';
 import 'package:qr_code_app/page/document/view/list_item_doc.view.dart';
+import 'package:qr_code_app/page/history/history.bloc.dart';
 
 class DocumentPage extends StatefulWidget {
   DocumentPage({Key key}) : super(key: key);
@@ -78,7 +79,9 @@ class _DocumentPageState extends State<DocumentPage> {
               ),
               preferredSize: const Size.fromHeight(50.0)),
         ),
-        body: StateLessPageDocument(query: object,),
+        body: StateLessPageDocument(
+          query: object,
+        ),
       ),
     );
   }
@@ -86,12 +89,14 @@ class _DocumentPageState extends State<DocumentPage> {
 
 class StateLessPageDocument extends StatelessWidget {
   final query;
-   StateLessPageDocument({Key key, this.query}) : super(key: key);
+  StateLessPageDocument({Key key, this.query}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return FutureProvider<Object>.value(
       value: blocDocumentModule.listDocuments(query),
-      child: ListItemDoc(object: query,),
+      child: ListItemDoc(
+        object: query,
+      ),
     );
   }
 }

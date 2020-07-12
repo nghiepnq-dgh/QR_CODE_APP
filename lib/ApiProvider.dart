@@ -16,7 +16,8 @@ class ApiProvider {
   ApiProvider._internal() {
     BaseOptions options = new BaseOptions(
       //baseUrl: "http://localhost:3200/",
-      baseUrl: "http://192.168.1.17:3200/",
+      // baseUrl: "http://192.168.100.9:3000/",
+      baseUrl: "http://localhost:3000/",
       connectTimeout: 60 * 1000, // 60 seconds
       receiveTimeout: 60 * 1000, // 60 seconds
       contentType: Headers.jsonContentType, responseType: ResponseType.json,
@@ -103,11 +104,11 @@ class ApiProvider {
     }
   }
 
-  Future<ListHistoryRespone> listHistory() async {
+  Future<ListHistoryRespone> listHistory(query) async {
     Response response;
     try {
       showLoadingDialog();
-      response = await _dio.put("history");
+      response = await _dio.get("history");
       hideLoadingDialog();
       return ListHistoryRespone.fromJson(response.data);
     } catch (error, stacktrace) {

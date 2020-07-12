@@ -1,5 +1,4 @@
 import 'package:qr_code_app/util/Base_Response.dart';
-
 class ListHistoryRespone extends BaseResponse {
   List<Data> data;
   int total;
