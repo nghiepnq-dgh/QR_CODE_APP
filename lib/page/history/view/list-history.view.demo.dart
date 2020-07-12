@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:qr_code_app/page/history/history.bloc.dart';
 import 'package:qr_code_app/page/history/model/list-history.model.dart';
 import 'package:qr_code_app/util/Functions.dart';
+import 'package:intl/intl.dart';
+
 
 class PageListHistoryDemo extends StatelessWidget {
   @override
@@ -156,7 +158,7 @@ class _ListItemHistoryState extends State<ListItemHistory> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
                               Text(
-                                "Ngày tìm: ${widget?.listHistory?.data[index].createdAt}",
+                                "Ngày tìm: ${DateFormat.yMd().add_jm().format(DateTime.parse(widget?.listHistory?.data[index].createdAt))}",
                                 style: TextStyle(fontSize: 13.0),
                               ),
                             ],
