@@ -3,20 +3,27 @@ import 'package:qr_code_app/page/document/document.repository.dart';
 import 'package:qr_code_app/page/document/model/doc_detail.model.dart';
 import 'package:qr_code_app/page/document/model/list_doc.model.dart';
 import 'package:qr_code_app/util/toast.message.dart';
-
+import 'package:rxdart/rxdart.dart';
 class DocumentBloc extends ChangeNotifier {
-  final DocumentRepository _documentRepository = DocumentRepository();
+  DocumentBloc() {
+    listDocuments();
+  }
 
-  listDocuments(query) async {
+  Sink<dynamic> get onChangeText =>_documents.sink;
+  final DocumentRepository _documentRepository = DocumentRepository();
+  Stream<DocumentsResponse> get documents => _documents.stream;
+  final _documents = BehaviorSubject<DocumentsResponse>();
+
+  Future<DocumentsResponse> listDocuments() async {
+    final Map<String, dynamic> query = new Map();
     query['page'] = 1;
-    query['limit'] = 20;
+    query['limit'] = 1000;
     DocumentsResponse documentsResponse =
         await _documentRepository.listDocumentsReposi(query);
     if (documentsResponse?.data != null) {
-      return documentsResponse;
+      _documents.add(documentsResponse);
     } else {
       ToastMessage.error(message: documentsResponse.message);
-      return documentsResponse;
     }
   }
 
@@ -42,6 +49,10 @@ class DocumentBloc extends ChangeNotifier {
       return documentDetailResponse;
     }
   }
-}
 
-final blocDocumentModule = DocumentBloc();
+  @override
+  void dispose() {
+    _documents.close();
+    super.dispose();
+  }
+}

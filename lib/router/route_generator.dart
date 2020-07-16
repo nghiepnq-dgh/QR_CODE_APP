@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_code_app/SplashScreen.dart';
+import 'package:qr_code_app/page/document/document.bloc.dart';
 import 'package:qr_code_app/page/document/view/document.view.dart';
 import 'package:qr_code_app/page/history/history.bloc.dart';
 import 'package:qr_code_app/page/history/view/list-history.view.demo.dart';
@@ -19,16 +20,14 @@ class RouteGenerator {
       case "/splash":
         return MaterialPageRoute(builder: (_) => SplashScreenPgae());
       case "/document":
-        return MaterialPageRoute(builder: (_) => DocumentPage());
-      // settings: settings,
-      //     builder: (context) {
-      //       return MultiProvider(providers: [
-      //           ChangeNotifierProvider(
-      //             builder: (_) => HistoryBloc(),
-      //             child: PageListHistoryDemo(),
-      //           )
-      //         ])
-      //     }
+        return MaterialPageRoute(
+            settings: settings,
+            builder: (context) {
+              return ChangeNotifierProvider<DocumentBloc>(
+                create: (_) => DocumentBloc(),
+                child: DocumentPage(),
+              );
+            });
       case "/history":
         return MaterialPageRoute(
             settings: settings,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:qr_code_app/page/document/view/document-detail.view.dart';
+import 'package:qr_code_app/page/document/view/document.view.dart';
 import 'package:qr_code_app/page/main_drawer/dart/drawer.view.dart';
 import 'package:qr_code_app/router/route_generator.dart';
 import 'package:qr_code_app/util/Key.dart';

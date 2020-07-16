@@ -63,9 +63,7 @@ class ApiProvider {
   Future<DocumentsResponse> listDocuments(query) async {
     Response response;
     try {
-      showLoadingDialog();
       response = await _dio.get("document", queryParameters: query);
-      hideLoadingDialog();
       return DocumentsResponse.fromJson(response.data);
     } catch (error, stacktrace) {
       print("Exception occured: $error stackTrace: $stacktrace");

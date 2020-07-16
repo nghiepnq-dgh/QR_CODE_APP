@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_code_app/page/document/document.bloc.dart';
 import 'package:qr_code_app/page/document/model/doc_detail.model.dart';
+import 'package:qr_code_app/page/history/model/list-history.model.dart';
 import 'package:qr_code_app/util/Functions.dart';
 
 class DocumentDetail extends StatefulWidget {
@@ -32,7 +33,7 @@ class _DocumentDetailState extends State<DocumentDetail> {
             ),
           ),
           body: FutureProvider<Object>.value(
-            value: blocDocumentModule.getDetailDoc(widget.docId),
+            value: DocumentBloc().getDetailDoc(widget.docId),
             child: ValidateDocument(),
           )),
     );
@@ -167,7 +168,7 @@ class ValidateDocument extends StatelessWidget {
                               onPressed: () {
                                 object['status'] = "REJECTED";
                                 object['reason'] = reason.text;
-                                blocDocumentModule.updateDoc(data.id, object);
+                                DocumentBloc().updateDoc(data.id, object);
                               },
                               shape: const StadiumBorder(),
                             )),
@@ -199,7 +200,7 @@ class ValidateDocument extends StatelessWidget {
                               onPressed: () {
                                 object['status'] = "APPROVED";
                                 object['reason'] = reason.text;
-                                blocDocumentModule.updateDoc(data.id, object);
+                                DocumentBloc().updateDoc(data.id, object);
                               },
                               shape: const StadiumBorder(),
                             )),
