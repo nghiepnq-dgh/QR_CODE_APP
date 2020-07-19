@@ -94,12 +94,13 @@ class _HomePageState extends State<HomePage> {
                                   ],
                                 ),
                               ),
-                              onPressed: () {
+                              onPressed: () async {
+                                final user = await LocalStore.getUserInfor();
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => DocumentDetail(
-                                          scanResult.rawContent)),
+                                          scanResult.rawContent, user)),
                                 );
                               },
                               shape: const StadiumBorder(),

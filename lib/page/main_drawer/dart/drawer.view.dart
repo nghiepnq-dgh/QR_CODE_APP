@@ -80,7 +80,7 @@ class ListMenuItem extends StatelessWidget {
                     Navigator.of(context).pushNamed("/document");
                   },
                 ),
-                ListTile(
+                role == "NORMAL" ? ListTile(
                   leading: Icon(Icons.history),
                   title: Text(
                     "Lịch sử tìm kiếm",
@@ -88,6 +88,16 @@ class ListMenuItem extends StatelessWidget {
                   ),
                   onTap: () {
                     Navigator.of(context).pushNamed("/history");
+                  },
+                ) : SizedBox(),
+                ListTile(
+                  leading: Icon(Icons.lock),
+                  title: Text(
+                    "Đổi mật khẩu",
+                    style: TextStyle(fontSize: 18.0),
+                  ),
+                  onTap: () {
+                    // Navigator.of(context).pushNamed();
                   },
                 ),
                 ListTile(

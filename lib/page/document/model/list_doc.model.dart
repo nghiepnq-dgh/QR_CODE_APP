@@ -34,8 +34,9 @@ class Data {
   String status;
   String reason;
   User user;
+  String room;
 
-  Data({this.id, this.contend, this.user, this.status, this.reason});
+  Data({this.id, this.contend, this.user, this.status, this.reason, this.room});
 
   Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -43,6 +44,7 @@ class Data {
     status = json['status'];
     reason = json['reason'];
     user = json['user'] != null ? new User.fromJson(json['user']) : null;
+    room = json['room'];
   }
 
   Map<String, dynamic> toJson() {
@@ -51,6 +53,7 @@ class Data {
     data['contend'] = this.contend;
     data['status'] = this.status;
     data['reason'] = this.reason;
+    data['room'] = this.room;
     if (this.user != null) {
       data['user'] = this.user.toJson();
     }

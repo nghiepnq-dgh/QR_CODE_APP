@@ -7,6 +7,7 @@ class DocumentDetailResponse {
   int statusCode;
   String message;
   String error;
+  String room;
 
   DocumentDetailResponse(
       {this.id,
@@ -16,7 +17,8 @@ class DocumentDetailResponse {
       this.user,
       this.statusCode,
       this.message,
-      this.error});
+      this.error,
+      this.room});
 
   DocumentDetailResponse.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -27,6 +29,7 @@ class DocumentDetailResponse {
     statusCode = json['statusCode'];
     message = json['message'];
     error = json['error'];
+    room = json['room'];
   }
 
   Map<String, dynamic> toJson() {
@@ -41,6 +44,7 @@ class DocumentDetailResponse {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     data['error'] = this.error;
+    data['room'] = this.room;
     return data;
   }
 }

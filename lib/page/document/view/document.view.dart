@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_code_app/page/document/document.bloc.dart';
@@ -6,12 +7,13 @@ import 'package:qr_code_app/page/document/view/document-detail.view.dart';
 import 'package:qr_code_app/util/Functions.dart';
 import 'package:qr_code_app/util/ImgPath.dart';
 import 'package:qr_code_app/util/Key.dart';
+import 'package:qr_code_app/util/LocalStored.dart';
 
 class DocumentPage extends StatelessWidget {
   Map<String, dynamic> object = new Map();
   @override
   Widget build(BuildContext context) {
-    final DocumentBloc bloc = Provider.of<DocumentBloc>(context);
+    final DocumentBloc bloc = Provider.of<DocumentBloc>(context, listen: false);
     return SafeArea(
         child: Scaffold(
             appBar: AppBar(
@@ -107,8 +109,10 @@ class ListItemDoc extends StatefulWidget {
 }
 
 class _ListItemDocState extends State<ListItemDoc> {
-  Future<Null> _refresh() async {
-//    blocDocumentModule.listDocuments(object);
+  @override
+  initState() {
+    super.initState();
+    Future.delayed(Duration.zero, () async {});
   }
 
   @override
@@ -116,20 +120,24 @@ class _ListItemDocState extends State<ListItemDoc> {
     return Material(
       child: Scaffold(
         body: RefreshIndicator(
-          onRefresh: () {
-            _refresh();
+          onRefresh: () async {
+            final DocumentBloc bloc = Provider.of<DocumentBloc>(context, listen: false);
+            bloc.documents;
           },
           key: KeyOption.item_doc,
           child: ListView.builder(
+              physics: const AlwaysScrollableScrollPhysics(),
               itemCount: widget?.object?.data.length,
               itemBuilder: (context, index) {
                 return ListTile(
-                  onTap: () {
+                  onTap: () async {
+                    final user = await LocalStore.getUserInfor();
+                    final userInfo = json.decode(user);
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) =>
-                              DocumentDetail(widget?.object?.data[index].id)),
+                          builder: (context) => DocumentDetail(
+                              widget?.object?.data[index].id, userInfo)),
                     );
                   },
                   title: Container(
@@ -186,7 +194,15 @@ class _ListItemDocState extends State<ListItemDoc> {
                                       : widget?.object?.data[index].status ==
                                               "APPROVED"
                                           ? Colors.blue
-                                          : Colors.red[200],
+                                          : widget?.object?.data[index]
+                                                      .status ==
+                                                  "REJECTED"
+                                              ? Colors.red[200]
+                                              : widget?.object?.data[index]
+                                                          .status ==
+                                                      "WAITTING"
+                                                  ? Colors.green[200]
+                                                  : Colors.orange[200],
                                   borderRadius:
                                       BorderRadiusDirectional.circular(7.0)),
                               child: Padding(
