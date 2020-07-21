@@ -6,6 +6,8 @@ class UserMeResponse {
   String identity;
   String role;
   String salt;
+  bool success;
+  String message;
 
   UserMeResponse(
       {this.id,
@@ -13,8 +15,9 @@ class UserMeResponse {
       this.name,
       this.address,
       this.identity,
-      this.role
-      });
+      this.role,
+      this.success,
+      this.message});
 
   UserMeResponse.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -23,6 +26,8 @@ class UserMeResponse {
     address = json['address'];
     identity = json['identity'];
     role = json['role'];
+    success = json['success'];
+    message = json['message'];
   }
 
   Map<String, dynamic> toJson() {
@@ -33,6 +38,8 @@ class UserMeResponse {
     data['address'] = this.address;
     data['identity'] = this.identity;
     data['role'] = this.role;
+    data['success'] = this.success;
+    data['message'] = this.message;
     return data;
   }
 }

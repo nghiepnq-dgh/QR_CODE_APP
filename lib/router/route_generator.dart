@@ -8,6 +8,7 @@ import 'package:qr_code_app/page/history/history.bloc.dart';
 import 'package:qr_code_app/page/history/view/list-history.view.demo.dart';
 import 'package:qr_code_app/page/home/HomePage.dart';
 import 'package:qr_code_app/page/login/login.view.dart';
+import 'package:qr_code_app/page/user/view/change-pass.view.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -19,6 +20,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => LoginView());
       case "/splash":
         return MaterialPageRoute(builder: (_) => SplashScreenPgae());
+      case "/change-pass":
+        return MaterialPageRoute(builder: (_) => ChangePassPage());
       case "/document":
         return MaterialPageRoute(
             settings: settings,

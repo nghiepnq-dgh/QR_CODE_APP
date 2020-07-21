@@ -97,7 +97,7 @@ class ListMenuItem extends StatelessWidget {
                     style: TextStyle(fontSize: 18.0),
                   ),
                   onTap: () {
-                    // Navigator.of(context).pushNamed();
+                    Navigator.of(context).pushNamed("/change-pass");
                   },
                 ),
                 ListTile(

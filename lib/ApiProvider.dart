@@ -15,7 +15,7 @@ class ApiProvider {
   }
   ApiProvider._internal() {
     BaseOptions options = new BaseOptions(
-      //baseUrl: "http://localhost:3200/",
+      //baseUrl: "http://localhost:3200/"
       // baseUrl: "http://192.168.1.8:3000/",
       baseUrl: "http://localhost:3000/",
       connectTimeout: 60 * 1000, // 60 seconds
@@ -48,6 +48,18 @@ class ApiProvider {
     } catch (error, stacktrace) {
       print("Exception occured: $error stackTrace: $stacktrace");
       return LoginResponse.fromJson(response?.data);
+    }
+  }
+
+  Future<UserMeResponse> changePass(pass, newPass, rePass) async {
+   Response response;
+    try {
+      response = await _dio.post("auth/change-password",
+          data: {"password": pass, "newPassword": newPass,  "reNewPassword": rePass});
+      return UserMeResponse.fromJson(response?.data);
+    } catch (error, stacktrace) {
+      print("Exception occured: $error stackTrace: $stacktrace");
+      return UserMeResponse.fromJson(response?.data);
     }
   }
 

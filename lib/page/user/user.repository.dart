@@ -8,4 +8,9 @@ class UserRepository {
   Future<UserMeResponse> getMeRepository() {
     return _apiProvider.getMe();
   }
+
+   Future<UserMeResponse> changePass(pass, newPass, rePass) {
+    return _apiProvider.changePass(pass, newPass, rePass);
+
+  }
 }

@@ -1,14 +1,11 @@
 import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
-import 'package:qr_code_app/page/home/HomePage.dart';
 import 'package:qr_code_app/page/login/login.model.dart';
 import 'package:qr_code_app/page/login/login.repository.dart';
 import 'package:qr_code_app/page/user/model/user_me.dart';
 import 'package:qr_code_app/page/user/user.repository.dart';
 import 'package:qr_code_app/util/LocalStored.dart';
 import 'package:qr_code_app/util/toast.message.dart';
-import 'package:rxdart/rxdart.dart';
 
 class LoginBloc {
   final LoginRepository _loginRepository = LoginRepository();
