@@ -101,57 +101,65 @@ class _ValidateDocumentState extends State<ValidateDocument> {
                             )),
                         Expanded(
                             flex: 2,
-                            child:
-                                // Container(
-                                //   decoration: new BoxDecoration(
-                                //       color: data.status == "NEW"
-                                //           ? Colors.green
-                                //           : data.status == "APPROVED"
-                                //               ? Colors.blue
-                                //               : Colors.red[200],
-                                //       borderRadius:
-                                //           BorderRadiusDirectional.circular(7.0)),
-                                //   child: Padding(
-                                //     padding: const EdgeInsets.all(1.0),
-                                //     child: Text(
-                                //       FunctionsUtil.convertStatus(data.status),
-                                //       textAlign: TextAlign.center,
-                                //       style: TextStyle(
-                                //           color: Colors.white, fontSize: 16.0),
-                                //     ),
-                                //   ),
-                                // )
-                                DropdownButton<String>(
-                              value: status,
-                              icon: Icon(Icons.arrow_downward),
-                              iconSize: 24,
-                              elevation: 16,
-                              style: TextStyle(color: Colors.deepPurple),
-                              underline: Container(
-                                height: 2,
-                                color: Colors.deepPurpleAccent,
-                              ),
-                              onChanged: (String newValue) {
-                                setState(() {
-                                  status = newValue;
-                                });
-                                object['status'] = status;
-                                DocumentBloc().updateDoc(data.id, object);
-                              },
-                              items: <String>[
-                                'NEW',
-                                'WAITTING',
-                                'ADDINNFO',
-                                'APPROVED',
-                                'REJECTED',
-                              ].map<DropdownMenuItem<String>>((String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child:
-                                      Text(FunctionsUtil.convertStatus(value)),
-                                );
-                              }).toList(),
-                            ))
+                            child: widget.user['role'] == "NORMAL"
+                                ? Container(
+                                    decoration: new BoxDecoration(
+                                        color: data.status == "NEW"
+                                            ? Colors.green
+                                            : data.status == "APPROVED"
+                                                ? Colors.blue
+                                                : data.status == "REJECTED"
+                                                    ? Colors.red[200]
+                                                    : data.status == "WAITTING"
+                                                        ? Colors.green[200]
+                                                        : Colors.orange[200],
+                                        borderRadius:
+                                            BorderRadiusDirectional.circular(
+                                                7.0)),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(1.0),
+                                      child: Text(
+                                        FunctionsUtil.convertStatus(
+                                            data.status),
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 16.0),
+                                      ),
+                                    ),
+                                  )
+                                : DropdownButton<String>(
+                                    value: status,
+                                    icon: Icon(Icons.arrow_downward),
+                                    iconSize: 24,
+                                    elevation: 16,
+                                    style: TextStyle(color: Colors.deepPurple),
+                                    underline: Container(
+                                      height: 2,
+                                      color: Colors.deepPurpleAccent,
+                                    ),
+                                    onChanged: (String newValue) {
+                                      setState(() {
+                                        status = newValue;
+                                      });
+                                      object['status'] = status;
+                                      DocumentBloc().updateDoc(data.id, object);
+                                    },
+                                    items: <String>[
+                                      'NEW',
+                                      'WAITTING',
+                                      'ADDINNFO',
+                                      'APPROVED',
+                                      'REJECTED',
+                                    ].map<DropdownMenuItem<String>>(
+                                        (String value) {
+                                      return DropdownMenuItem<String>(
+                                        value: value,
+                                        child: Text(
+                                            FunctionsUtil.convertStatus(value)),
+                                      );
+                                    }).toList(),
+                                  ))
                       ],
                     ),
                     SizedBox(
