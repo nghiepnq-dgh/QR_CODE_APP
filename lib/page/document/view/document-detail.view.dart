@@ -4,12 +4,13 @@ import 'package:provider/provider.dart';
 import 'package:qr_code_app/page/document/document.bloc.dart';
 import 'package:qr_code_app/page/document/model/doc_detail.model.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:qr_code_app/page/user/model/user_me.dart';
 import 'package:qr_code_app/util/Functions.dart';
 
 class DocumentDetail extends StatefulWidget {
   final docId;
-  final user;
-  DocumentDetail(this.docId, this.user);
+  final role;
+  DocumentDetail(this.docId, this.role);
   @override
   _DocumentDetailState createState() => _DocumentDetailState();
 }
@@ -35,16 +36,16 @@ class _DocumentDetailState extends State<DocumentDetail> {
           ),
           body: FutureProvider<Object>.value(
             value: DocumentBloc().getDetailDoc(widget.docId),
-            child: ValidateDocument(widget.user, widget.docId),
+            child: ValidateDocument(widget.role, widget.docId),
           )),
     );
   }
 }
 
 class ValidateDocument extends StatefulWidget {
-  var user;
+  final role;
   final id;
-  ValidateDocument(this.user, this.id);
+  ValidateDocument(this.role, this.id);
 
   @override
   _ValidateDocumentState createState() => _ValidateDocumentState();
@@ -63,7 +64,7 @@ class _ValidateDocumentState extends State<ValidateDocument> {
       DocumentDetailResponse document =
           await DocumentBloc().getDetailDoc(widget.id);
       setState(() {
-        room = document?.room != null ? document.room : "Công chứng";
+        room = document?.rooms != null && document?.rooms.length > 0  ? document.rooms[document.rooms.length -1].type : "Công chứng";
         status = document?.status != null ? document.status : "NEW";
       });
     });
@@ -101,7 +102,7 @@ class _ValidateDocumentState extends State<ValidateDocument> {
                             )),
                         Expanded(
                             flex: 2,
-                            child: data?.user?.role == "NORMAL"
+                            child: widget?.role == "NORMAL"
                                 ? Container(
                                     decoration: new BoxDecoration(
                                         color: data.status == "NEW"
@@ -195,7 +196,7 @@ class _ValidateDocumentState extends State<ValidateDocument> {
                     SizedBox(
                       height: 10.0,
                     ),
-                    data?.user?.role != "NORMAL"
+                    widget.role != "NORMAL"
                         ? Row(
                             children: <Widget>[
                               Expanded(
@@ -237,7 +238,7 @@ class _ValidateDocumentState extends State<ValidateDocument> {
                             children: <Widget>[
                               Text("Phòng xử lí: "),
                               Text(
-                                data?.room != null ? data.room : "Trống",
+                                data?.rooms != null && data?.rooms.length > 0 ? data?.rooms[data.rooms.length -1].type : "Trống",
                                 style: TextStyle(
                                     fontSize: 16.0,
                                     fontWeight: FontWeight.bold),
@@ -247,7 +248,7 @@ class _ValidateDocumentState extends State<ValidateDocument> {
                     SizedBox(
                       height: 10.0,
                     ),
-                    data?.user?.role != "NORMAL"
+                    widget?.role != "NORMAL"
                         ? Row(
                             children: <Widget>[
                               Expanded(

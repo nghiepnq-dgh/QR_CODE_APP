@@ -1,50 +1,60 @@
 class DocumentDetailResponse {
-  String id;
-  String contend;
-  String status;
-  String reason;
   User user;
+  String contend;
+  List<Rooms> rooms;
+  String id;
+  String reason;
+  String status;
+  bool success;
   int statusCode;
   String message;
   String error;
-  String room;
-
   DocumentDetailResponse(
-      {this.id,
+      {this.user,
       this.contend,
-      this.status,
+      this.rooms,
+      this.id,
       this.reason,
-      this.user,
-      this.statusCode,
+      this.status,
+        this.statusCode,
       this.message,
       this.error,
-      this.room});
+      this.success});
 
   DocumentDetailResponse.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    contend = json['contend'];
-    status = json['status'];
-    reason = json['reason'];
     user = json['user'] != null ? new User.fromJson(json['user']) : null;
+    contend = json['contend'];
+    if (json['rooms'] != null) {
+      rooms = new List<Rooms>();
+      json['rooms'].forEach((v) {
+        rooms.add(new Rooms.fromJson(v));
+      });
+    }
+    id = json['id'];
+    reason = json['reason'];
+    status = json['status'];
+    success = json['success'];
     statusCode = json['statusCode'];
     message = json['message'];
     error = json['error'];
-    room = json['room'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['contend'] = this.contend;
-    data['status'] = this.status;
-    data['reason'] = this.reason;
     if (this.user != null) {
       data['user'] = this.user.toJson();
     }
+    data['contend'] = this.contend;
+    if (this.rooms != null) {
+      data['rooms'] = this.rooms.map((v) => v.toJson()).toList();
+    }
+    data['id'] = this.id;
+    data['reason'] = this.reason;
+    data['status'] = this.status;
+    data['success'] = this.success;
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     data['error'] = this.error;
-    data['room'] = this.room;
     return data;
   }
 }
@@ -90,6 +100,31 @@ class User {
     data['identity'] = this.identity;
     data['role'] = this.role;
     data['salt'] = this.salt;
+    return data;
+  }
+}
+
+class Rooms {
+  int id;
+  String type;
+  String createdAt;
+  String updatedAt;
+
+  Rooms({this.id, this.type, this.createdAt, this.updatedAt});
+
+  Rooms.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    type = json['type'];
+    createdAt = json['createdAt'];
+    updatedAt = json['updatedAt'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['type'] = this.type;
+    data['createdAt'] = this.createdAt;
+    data['updatedAt'] = this.updatedAt;
     return data;
   }
 }

@@ -34,9 +34,10 @@ class Data {
   String status;
   String reason;
   User user;
-  String room;
+  List<Rooms> rooms;
 
-  Data({this.id, this.contend, this.user, this.status, this.reason, this.room});
+  Data(
+      {this.id, this.contend, this.status, this.reason, this.user, this.rooms});
 
   Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -44,7 +45,12 @@ class Data {
     status = json['status'];
     reason = json['reason'];
     user = json['user'] != null ? new User.fromJson(json['user']) : null;
-    room = json['room'];
+    if (json['rooms'] != null) {
+      rooms = new List<Rooms>();
+      json['rooms'].forEach((v) {
+        rooms.add(new Rooms.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -53,9 +59,11 @@ class Data {
     data['contend'] = this.contend;
     data['status'] = this.status;
     data['reason'] = this.reason;
-    data['room'] = this.room;
     if (this.user != null) {
       data['user'] = this.user.toJson();
+    }
+    if (this.rooms != null) {
+      data['rooms'] = this.rooms.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -102,6 +110,31 @@ class User {
     data['identity'] = this.identity;
     data['role'] = this.role;
     data['salt'] = this.salt;
+    return data;
+  }
+}
+
+class Rooms {
+  int id;
+  String type;
+  String createdAt;
+  String updatedAt;
+
+  Rooms({this.id, this.type, this.createdAt, this.updatedAt});
+
+  Rooms.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    type = json['type'];
+    createdAt = json['createdAt'];
+    updatedAt = json['updatedAt'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['type'] = this.type;
+    data['createdAt'] = this.createdAt;
+    data['updatedAt'] = this.updatedAt;
     return data;
   }
 }

@@ -137,7 +137,7 @@ class _ListItemDocState extends State<ListItemDoc> {
                       context,
                       MaterialPageRoute(
                           builder: (context) => DocumentDetail(
-                              widget?.object?.data[index].id, userInfo)),
+                              widget?.object?.data[index].id, userInfo['role'])),
                     );
                   },
                   title: Container(

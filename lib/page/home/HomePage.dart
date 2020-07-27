@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:qr_code_app/page/document/view/document-detail.view.dart';
 import 'package:qr_code_app/page/document/view/document.view.dart';
@@ -96,11 +98,12 @@ class _HomePageState extends State<HomePage> {
                               ),
                               onPressed: () async {
                                 final user = await LocalStore.getUserInfor();
+                                final userInfo = json.decode(user);
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => DocumentDetail(
-                                          scanResult.rawContent, user)),
+                                          scanResult.rawContent, userInfo['role'])),
                                 );
                               },
                               shape: const StadiumBorder(),
