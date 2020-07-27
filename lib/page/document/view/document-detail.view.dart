@@ -101,7 +101,7 @@ class _ValidateDocumentState extends State<ValidateDocument> {
                             )),
                         Expanded(
                             flex: 2,
-                            child: widget.user['role'] == "NORMAL"
+                            child: data?.user?.role == "NORMAL"
                                 ? Container(
                                     decoration: new BoxDecoration(
                                         color: data.status == "NEW"
@@ -195,7 +195,7 @@ class _ValidateDocumentState extends State<ValidateDocument> {
                     SizedBox(
                       height: 10.0,
                     ),
-                    widget.user['role'] != "NORMAL"
+                    data?.user?.role != "NORMAL"
                         ? Row(
                             children: <Widget>[
                               Expanded(
@@ -247,7 +247,7 @@ class _ValidateDocumentState extends State<ValidateDocument> {
                     SizedBox(
                       height: 10.0,
                     ),
-                    widget.user['role'] != "NORMAL"
+                    data?.user?.role != "NORMAL"
                         ? Row(
                             children: <Widget>[
                               Expanded(
